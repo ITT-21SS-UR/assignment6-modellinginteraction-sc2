@@ -8,7 +8,7 @@ import sys
 class Calculator(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.win = uic.loadUi("calculator.ui", self)
+        self.win = uic.loadUi("calculator/calculator.ui", self)
         self.calc_model = CalcModel()
         self.setup_ui()
 

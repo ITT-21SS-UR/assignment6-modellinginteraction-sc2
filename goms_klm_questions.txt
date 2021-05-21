@@ -14,4 +14,9 @@ estimate of how much time in total is needed to perform the entire task.
 b) Why might the original KLM not perfectly model input performance on a laptop?
    How could it be adapted?
 
+   A laptop usually has a touchpad instead of a mouse. Therefore, the measured times 
+   for pointing would have to be adjusted here by determining them in a study.
+   You can also zoom in and out with the touchpad. These could be implemented as two 
+   separate operators and also evaluate the times in a study.
+
 
