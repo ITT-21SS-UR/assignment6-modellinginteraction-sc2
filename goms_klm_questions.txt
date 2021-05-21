@@ -1,0 +1,17 @@
+# Author: Sarah and Claudia
+
+a) What does the term “critical path” describe with regard to GOMS?
+
+The critical path in GOMS is derived from the critical path method from project
+management. The critical path is used to display parallel activities and 
+calculate total task times. Together with Cognition, Perception, Motor operators
+and the critical path usage they form the CPM-GOMS.
+Similiar to project management, the critical path in GOMS is the sequence of 
+activities that determines the longest path through the chart and it shows an 
+estimate of how much time in total is needed to perform the entire task.
+#########################################################
+
+b) Why might the original KLM not perfectly model input performance on a laptop?
+   How could it be adapted?
+
+
