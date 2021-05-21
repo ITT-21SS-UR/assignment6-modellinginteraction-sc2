@@ -148,7 +148,7 @@ class CalcModel(QObject):
             if i == values_length - 1:
                 sys.stdout.write(value)
             else:
-                sys.stdout.write(value + ";")
+                sys.stdout.write(value + ",")
 
         sys.stdout.write("\n")
         sys.stdout.flush()

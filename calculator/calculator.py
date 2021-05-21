@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5 import uic, Qt, QtCore
+from PyQt5 import uic, Qt, QtCore, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 
 from calc_model import CalcModel
@@ -10,7 +10,10 @@ from calc_model import CalcModel
 class Calculator(QMainWindow):
     def __init__(self):
         super().__init__()
+
         self.__window = uic.loadUi("calculator/calculator.ui", self)
+        self.move(QtWidgets.qApp.desktop().availableGeometry(
+            self).center() - self.rect().center())
         self.__calc_model = CalcModel()
         self.__setup_ui()
 

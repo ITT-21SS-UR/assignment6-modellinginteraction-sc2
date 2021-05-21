@@ -1,9 +1,0 @@
-        # was ist mit der vorlaufzeit
-        # K P B H für KLM bestimmen
-        # bewegung an sich mit maus: wo maus sich bewegt loggen und dann wo maus stoppt loggen
-        # button_clicked und button_released als input type TODO # oder alternativ durch das doppelte teilen
-        # key nur pressed  kein release
-        # hand switching auf beide clicken und dann clickzeit abziehen
-
-        # wie oft button geloggt wird
-        # pointing anzahl nehmen und anzahl der klicks rausnehmen: zeitdifferenz
