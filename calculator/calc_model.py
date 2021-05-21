@@ -6,59 +6,46 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QObject
 
 
-class ConfigKeys(Enum):
-    PARTICIPANT_ID = "participant_id"
-
-    # TODO more?
-
-    @staticmethod
-    def get_all_values():
-        return list(map(lambda v: v.value, ConfigKeys))
-
-
 class CalcModel(QObject):
-    # input source (button, key, result) for proper logging
+    # input source (button, key) for proper logging
     class LoggingEntity(Enum):
-        BUTTON = "button"
-        KEY = "key"
-        RESULT = "result"
+        BUTTON_CLICKED = "button_clicked"
+        KEY_PRESSED = "key_pressed"
 
     INPUT_TYPE = "input_type"
     INPUT_VALUE = "input_value"
     TIMESTAMP = "timestamp"
-    TIME_DIFFERENCE = "time_difference_from_last_input_in_ms"
-
-    INVALID_TIME = "NaN"
 
     model_changed = pyqtSignal()
 
     @staticmethod
     def __is_operator(key_code):
-        return key_code == QtCore.Qt.Key_Plus \
-               or key_code == QtCore.Qt.Key_Minus \
-               or key_code == QtCore.Qt.Key_Asterisk \
-               or key_code == QtCore.Qt.Key_Slash \
-               or key_code == QtCore.Qt.Key_Delete \
-               or key_code == QtCore.Qt.Key_Backspace \
-               or key_code == QtCore.Qt.Key_Return \
-               or key_code == QtCore.Qt.Key_Enter
+        return (key_code == QtCore.Qt.Key_Plus
+                or key_code == QtCore.Qt.Key_Minus
+                or key_code == QtCore.Qt.Key_Asterisk
+                or key_code == QtCore.Qt.Key_Slash
+                or key_code == QtCore.Qt.Key_Delete
+                or key_code == QtCore.Qt.Key_Backspace
+                or key_code == QtCore.Qt.Key_Return
+                or key_code == QtCore.Qt.Key_Enter)
 
     @staticmethod
     def __is_digit(key_code):
-        return key_code == QtCore.Qt.Key_0 \
-               or key_code == QtCore.Qt.Key_1 \
-               or key_code == QtCore.Qt.Key_2 \
-               or key_code == QtCore.Qt.Key_3 \
-               or key_code == QtCore.Qt.Key_4 \
-               or key_code == QtCore.Qt.Key_5 \
-               or key_code == QtCore.Qt.Key_6 \
-               or key_code == QtCore.Qt.Key_7 \
-               or key_code == QtCore.Qt.Key_8 \
-               or key_code == QtCore.Qt.Key_9
+        return (key_code == QtCore.Qt.Key_0
+                or key_code == QtCore.Qt.Key_1
+                or key_code == QtCore.Qt.Key_2
+                or key_code == QtCore.Qt.Key_3
+                or key_code == QtCore.Qt.Key_4
+                or key_code == QtCore.Qt.Key_5
+                or key_code == QtCore.Qt.Key_6
+                or key_code == QtCore.Qt.Key_7
+                or key_code == QtCore.Qt.Key_8
+                or key_code == QtCore.Qt.Key_9)
 
     @staticmethod
     def __is_period(key_code):
-        return key_code == QtCore.Qt.Key_Period or key_code == QtCore.Qt.Key_Comma
+        return (key_code == QtCore.Qt.Key_Period
+                or key_code == QtCore.Qt.Key_Comma)
 
     @staticmethod
     def __key_code_to_text(key_code):
@@ -110,7 +97,8 @@ class CalcModel(QObject):
         if key_code == QtCore.Qt.Key_Delete:
             return "clear"
 
-        if key_code == QtCore.Qt.Key_Return or key_code == QtCore.Qt.Key_Enter:
+        if (key_code == QtCore.Qt.Key_Return
+                or key_code == QtCore.Qt.Key_Enter):
             return "="
 
         if CalcModel.__is_period(key_code):
@@ -123,35 +111,20 @@ class CalcModel(QObject):
         self.__formula = ""  # current formula with operators
         self.__finished = False  # indicates a finished calculation
 
-        self.previous_time = None
-
         self.__stdout_csv_column_names()
-
-    def __calculate_time_difference(self):
-        try:
-            time_difference = (datetime.now() - self.previous_time).total_seconds() * 1000
-            self.previous_time = datetime.now()
-            return time_difference
-        except (AttributeError, TypeError):
-            self.previous_time = datetime.now()
-            return self.INVALID_TIME
 
     def __get_csv_columns(self):
         return [
-            ConfigKeys.PARTICIPANT_ID.value,
             self.INPUT_TYPE,
             self.INPUT_VALUE,
-            self.TIMESTAMP,
-            self.TIME_DIFFERENCE
+            self.TIMESTAMP
         ]
 
     def __create_row_data(self, input_type, input_value):
         return {
-            ConfigKeys.PARTICIPANT_ID.value: 1,  # TODO
             self.INPUT_TYPE: input_type,
             self.INPUT_VALUE: input_value,
-            self.TIMESTAMP: datetime.now(),
-            self.TIME_DIFFERENCE: self.__calculate_time_difference(),
+            self.TIMESTAMP: datetime.now()
         }
 
     def __stdout_csv_column_names(self):
@@ -183,9 +156,8 @@ class CalcModel(QObject):
     def log_input(type):
         def log_decorator(function):
             def log_function(self, to_be_logged):
-                if type != CalcModel.LoggingEntity.RESULT:
-                    self.__write_to_stdout_in_csv_format(
-                        self.__create_row_data(type.value, CalcModel.__key_code_to_text(to_be_logged)))
+                self.__write_to_stdout_in_csv_format(
+                    self.__create_row_data(type.value, CalcModel.__key_code_to_text(to_be_logged)))
 
                 function(self, to_be_logged)
 
@@ -193,7 +165,6 @@ class CalcModel(QObject):
 
         return log_decorator
 
-    @log_input(LoggingEntity.RESULT)
     def __on_result_evaluated(self, result):
         self.__text = result
         self.__finished = True
@@ -233,12 +204,14 @@ class CalcModel(QObject):
                 self.__delete()
 
             # before calculation the text is appended to the formula
-            elif key_code == QtCore.Qt.Key_Return or key_code == QtCore.Qt.Key_Enter:
+            elif (key_code == QtCore.Qt.Key_Return
+                  or key_code == QtCore.Qt.Key_Enter):
                 self.__formula += self.__text
                 self.__calculate()
 
             # this effectively changes the current operator
-            elif self.__formula and not self.__text:
+            elif (self.__formula
+                  and not self.__text):
                 self.__formula = self.__formula[:-1] + key_text
 
             elif self.__text:
@@ -251,29 +224,30 @@ class CalcModel(QObject):
         self.model_changed.emit()
 
     def __is_key_allowed(self, key_code):
-        if CalcModel.__is_period(key_code) and ("." in self.__text):
+        if (CalcModel.__is_period(key_code)
+                and ("." in self.__text)):
             return False
 
         return True
 
     @staticmethod
     def can_handle_key(key_code):
-        if CalcModel.__is_digit(key_code) \
-                or CalcModel.__is_operator(key_code) \
-                or CalcModel.__is_period(key_code):
+        if (CalcModel.__is_digit(key_code)
+                or CalcModel.__is_operator(key_code)
+                or CalcModel.__is_period(key_code)):
             return True
 
         return False
 
-    @log_input(LoggingEntity.KEY)
+    @log_input(LoggingEntity.KEY_PRESSED)
     def key_pressed(self, key_code):
         if self.__finished:
             self.__clear()
 
         self.__handle_input(key_code)
 
-    @log_input(LoggingEntity.BUTTON)
-    def button_pressed(self, key_code):
+    @log_input(LoggingEntity.BUTTON_CLICKED)
+    def button_clicked(self, key_code):
         if self.__finished:
             self.__clear()
 
