@@ -11,8 +11,7 @@ from config_parser import ConfigParser
 class Calculator(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        self.window = uic.loadUi("calculator.ui", self)
+        self.window = uic.loadUi("calculator/calculator.ui", self)
         self.calc_model = CalcModel()
         self.setup_ui()
 
