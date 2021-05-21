@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QMainWindow
 
 from calc_model import CalcModel
 
-
 # Adjusted code from Sarahs calculator assignment
 class Calculator(QMainWindow):
     def __init__(self):
