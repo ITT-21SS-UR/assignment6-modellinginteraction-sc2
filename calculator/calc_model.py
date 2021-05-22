@@ -5,6 +5,8 @@ from enum import Enum
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QObject
 
+from config_parser import ConfigKeys
+
 
 class CalcModel(QObject):
     # input source (button, key) for proper logging
@@ -104,9 +106,10 @@ class CalcModel(QObject):
         if CalcModel.__is_period(key_code):
             return "."
 
-    def __init__(self):
+    def __init__(self, config=None):
         super().__init__()
 
+        self.__config = config
         self.__text = ""  # current digits
         self.__formula = ""  # current formula with operators
         self.__finished = False  # indicates a finished calculation
@@ -114,6 +117,15 @@ class CalcModel(QObject):
         self.__stdout_csv_column_names()
 
     def __get_csv_columns(self):
+        if self.__config:
+            return [
+                ConfigKeys.PARTICIPANT_ID.value,
+                ConfigKeys.TASK.value,
+                self.INPUT_TYPE,
+                self.INPUT_VALUE,
+                self.TIMESTAMP
+            ]
+
         return [
             self.INPUT_TYPE,
             self.INPUT_VALUE,
@@ -121,6 +133,15 @@ class CalcModel(QObject):
         ]
 
     def __create_row_data(self, input_type, input_value):
+        if self.__config:
+            return {
+                ConfigKeys.PARTICIPANT_ID.value: self.__config[ConfigKeys.PARTICIPANT_ID.value],
+                ConfigKeys.TASK.value: self.__config[ConfigKeys.TASK.value],
+                self.INPUT_TYPE: input_type,
+                self.INPUT_VALUE: input_value,
+                self.TIMESTAMP: datetime.now()
+            }
+
         return {
             self.INPUT_TYPE: input_type,
             self.INPUT_VALUE: input_value,

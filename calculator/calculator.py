@@ -4,16 +4,18 @@ from PyQt5 import uic, Qt, QtCore, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 
 from calc_model import CalcModel
+from config_parser import ConfigParser
 
-# Adjusted code from Sarahs calculator assignment
+
+# Adjusted code from Sarah's calculator assignment
 class Calculator(QMainWindow):
-    def __init__(self):
+    def __init__(self, config=None):
         super().__init__()
 
         self.__window = uic.loadUi("calculator/calculator.ui", self)
         self.move(QtWidgets.qApp.desktop().availableGeometry(
             self).center() - self.rect().center())
-        self.__calc_model = CalcModel()
+        self.__calc_model = CalcModel(config)
         self.__setup_ui()
 
     def setup_buttons(self):
@@ -76,9 +78,18 @@ class Calculator(QMainWindow):
             event.ignore()
 
 
-if __name__ == '__main__':
+def start_program():
     app = Qt.QApplication(sys.argv)
-    window = Calculator()
+
+    if len(sys.argv) < 2:
+        window = Calculator()
+    else:
+        config_parser = ConfigParser()
+        window = Calculator(config=config_parser.get_config())
 
     window.show()
     app.exec()
+
+
+if __name__ == '__main__':
+    start_program()
