@@ -29,7 +29,16 @@ class CalcModel(QObject):
                 or key_code == QtCore.Qt.Key_Delete
                 or key_code == QtCore.Qt.Key_Backspace
                 or key_code == QtCore.Qt.Key_Return
-                or key_code == QtCore.Qt.Key_Enter)
+                or key_code == QtCore.Qt.Key_Enter
+                or key_code == QtCore.Qt.Key_Dead_Circumflex
+                )
+
+    @staticmethod
+    def __is_bracket(key_code):
+        return (key_code == QtCore.Qt.Key_ParenLeft
+                or key_code == QtCore.Qt.Key_ParenRight
+                or key_code == "("
+                or key_code == ")")
 
     @staticmethod
     def __is_digit(key_code):
@@ -102,6 +111,15 @@ class CalcModel(QObject):
         if (key_code == QtCore.Qt.Key_Return
                 or key_code == QtCore.Qt.Key_Enter):
             return "="
+
+        if key_code == QtCore.Qt.Key_ParenLeft:
+            return "("
+
+        if key_code == QtCore.Qt.Key_ParenRight:
+            return ")"
+
+        if key_code == QtCore.Qt.Key_Dead_Circumflex:
+            return "**"
 
         if CalcModel.__is_period(key_code):
             return "."
@@ -217,7 +235,14 @@ class CalcModel(QObject):
         # the key code is converted to its text representation
         key_text = CalcModel.__key_code_to_text(key_code)
 
-        if CalcModel.__is_operator(key_code):
+        if CalcModel.__is_bracket(key_code):
+            if self.__text:
+                self.__formula += self.__text + key_text
+                self.__text = ""
+            else:
+                self.__formula += key_text
+
+        elif CalcModel.__is_operator(key_code):
             if key_code == QtCore.Qt.Key_Delete:
                 self.__clear()
 
@@ -232,11 +257,16 @@ class CalcModel(QObject):
 
             # this effectively changes the current operator
             elif (self.__formula
-                  and not self.__text):
+                  and not self.__text
+                  and not CalcModel.__is_bracket(self.__formula[-1])):
                 self.__formula = self.__formula[:-1] + key_text
 
             elif self.__text:
                 self.__formula += self.__text + key_text
+                self.__text = ""
+
+            else:
+                self.__formula += key_text
                 self.__text = ""
 
         else:
@@ -255,7 +285,8 @@ class CalcModel(QObject):
     def can_handle_key(key_code):
         if (CalcModel.__is_digit(key_code)
                 or CalcModel.__is_operator(key_code)
-                or CalcModel.__is_period(key_code)):
+                or CalcModel.__is_period(key_code)
+                or CalcModel.__is_bracket(key_code)):
             return True
 
         return False

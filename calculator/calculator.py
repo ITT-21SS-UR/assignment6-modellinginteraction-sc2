@@ -58,6 +58,13 @@ class Calculator(QMainWindow):
         self.__window.btnClear.clicked.connect(
             lambda: self.__calc_model.button_clicked(QtCore.Qt.Key_Delete))
 
+        self.__window.btnExponent.clicked.connect(
+            lambda: self.__calc_model.button_clicked(QtCore.Qt.Key_Dead_Circumflex))
+        self.__window.btnBracketOpen.clicked.connect(
+            lambda: self.__calc_model.button_clicked(QtCore.Qt.Key_ParenLeft))
+        self.__window.btnBracketClose.clicked.connect(
+            lambda: self.__calc_model.button_clicked(QtCore.Qt.Key_ParenRight))
+
     def __setup_ui(self):
         # label to display the current operator (initialized empty).
         self.__window.lblOperator.setText("")
