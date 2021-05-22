@@ -1,0 +1,7 @@
+# adding the numbers from 1 to 20 using only the mouse
+# requires 51 button clicks + ?
+# switching between pointing and clicks (button pressed and released) with mental demand
+51p # pointing to number or operator
+51b # button pressed
+51b # button released
+51m

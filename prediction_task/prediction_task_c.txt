@@ -1,0 +1,6 @@
+# calculating the result of (3² + 4²) * 15.2 using the mouse
+# requires 15 button clicks
+15p # pointing to number or operator
+15b # button pressed
+15b # button released
+15m
