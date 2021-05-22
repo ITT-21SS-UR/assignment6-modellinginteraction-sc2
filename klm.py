@@ -57,7 +57,7 @@ def calc_klm_time_one_line(line_data):
 # TODO check values
 def get_klm_value(char):
     if char == 'k':
-        return 0.12
+        return 0.28
     elif char == 'p':
         return 1.1
     elif char == 'b':
@@ -70,18 +70,17 @@ def get_klm_value(char):
     return
 
 
-# TODO get correct values
 def get_experiment_value(char):
     if char == 'k':
-        return 0.2
+        return 0.28
     elif char == 'p':
-        return 1.3
+        return 0.73
     elif char == 'b':
-        return 0.2
+        return 0.16
     elif char == 'h':
-        return 0.3
+        return 0.31
     elif char == 'm':
-        return 1.5
+        return 1.2  # standard value because not calculated during study
 
     return
 
