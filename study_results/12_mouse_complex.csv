@@ -1,0 +1,16 @@
+participant_id,task,input_type,input_value,timestamp
+12,C,button_clicked,(,2021-05-23 19:48:41.145059
+12,C,button_clicked,3,2021-05-23 19:48:42.017549
+12,C,button_clicked,**,2021-05-23 19:48:42.474937
+12,C,button_clicked,2,2021-05-23 19:48:43.458243
+12,C,button_clicked,+,2021-05-23 19:48:44.097733
+12,C,button_clicked,4,2021-05-23 19:48:45.130171
+12,C,button_clicked,**,2021-05-23 19:48:46.033897
+12,C,button_clicked,2,2021-05-23 19:48:47.016951
+12,C,button_clicked,),2021-05-23 19:48:47.929237
+12,C,button_clicked,*,2021-05-23 19:48:48.698593
+12,C,button_clicked,1,2021-05-23 19:48:49.513879
+12,C,button_clicked,5,2021-05-23 19:48:50.098940
+12,C,button_clicked,.,2021-05-23 19:48:50.737768
+12,C,button_clicked,2,2021-05-23 19:48:51.169392
+12,C,button_clicked,=,2021-05-23 19:48:51.953412
