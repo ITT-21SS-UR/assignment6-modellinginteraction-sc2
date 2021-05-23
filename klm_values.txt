@@ -2,4 +2,4 @@
 m8k # remember username, enter eight keystrokes for username
 k  # tab, switches to password field
 20m13k # remember and enter password (13 characters), 
-hpbb # switch to mouse, move over "sign in" button, click.
+hpBB # switch to mouse, move over "sign in" button, click.

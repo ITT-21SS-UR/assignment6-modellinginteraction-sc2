@@ -1,5 +1,8 @@
 import sys
 
+# Author: Sarah
+# Reviewer: Claudia
+
 
 def read_file(filename):
     file = open(filename, 'r')
@@ -7,14 +10,12 @@ def read_file(filename):
 
     count = 0
     data = []
-    # Strips the newline character
+
+    # Strips at newline character
     for line in lines:
         data.append(line.strip())
         count += 1
 
-        # print("Line{}: {}".format(count, line.strip()))
-
-    # print(data)
     return data
 
 
@@ -44,27 +45,26 @@ def calc_klm_time_one_line(line_data):
 
         if not line_data[i].isdigit():
             if current_number == '':
-                result_klm += get_klm_value(line_data[i])
-                result_experiment += get_experiment_value(line_data[i])
+                result_klm += get_klm_value(line_data[i].lower())
+                result_experiment += get_experiment_value(line_data[i].lower())
             else:
-                result_klm += int(current_number) * get_klm_value(line_data[i])
-                result_experiment += int(current_number) * get_experiment_value(line_data[i])
+                result_klm += int(current_number) * get_klm_value(line_data[i].lower())
+                result_experiment += int(current_number) * get_experiment_value(line_data[i].lower())
             current_number = ""
 
     return (result_klm, result_experiment)
 
 
-# TODO check values
 def get_klm_value(char):
     if char == 'k':
         return 0.28
-    elif char == 'p':
+    if char == 'p':
         return 1.1
-    elif char == 'b':
+    if char == 'b':
         return 0.1
-    elif char == 'h':
+    if char == 'h':
         return 0.4
-    elif char == 'm':
+    if char == 'm':
         return 1.2
 
     return
@@ -73,13 +73,13 @@ def get_klm_value(char):
 def get_experiment_value(char):
     if char == 'k':
         return 0.28
-    elif char == 'p':
+    if char == 'p':
         return 0.73
-    elif char == 'b':
+    if char == 'b':
         return 0.16
-    elif char == 'h':
+    if char == 'h':
         return 0.31
-    elif char == 'm':
+    if char == 'm':
         return 1.2  # standard value because not calculated during study
 
     return
@@ -90,18 +90,17 @@ def calc_total_klm_time(data):
     result_experiment = 0.0
 
     for i in range(0, len(data)):
-        result_klm += calc_klm_time_one_line(data[i])[0]
-        result_experiment += calc_klm_time_one_line(data[i])[1]
+        result_klm += calc_klm_time_one_line(data[i].lower())[0]
+        result_experiment += calc_klm_time_one_line(data[i].lower())[1]
 
-    print("Time for stadard klm: {}".format(result_klm))
+    print("Time for standard klm: {}".format(result_klm))
     print("Time for experiment klm: {}".format(result_experiment))
 
     return (result_klm, result_experiment)
 
 
 if __name__ == '__main__':
-    filename = sys.argv[1]
-    data = read_file(filename)
-    cleaned_data = delete_comments(data)
+    file_data = read_file(sys.argv[1])
+    new_data = delete_comments(file_data)
 
-    calc_total_klm_time(cleaned_data)
+    calc_total_klm_time(new_data)

@@ -1,3 +1,2 @@
 # calculating the result of (3² + 4²) * 15.2 using the keyboard
-# requires 15 keystrokes plus 3 shifts (two brackets and one asterisk)
-18k51m
+18k # requires 15 keystrokes plus 3 shifts (two brackets and one asterisk)

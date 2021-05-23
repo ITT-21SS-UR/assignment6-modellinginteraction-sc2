@@ -1,3 +1,2 @@
 # adding the numbers from 1 to 20 using only the keyboard
-# requires 51 keystrokes with mental demand
-51k51m
+51k # requires 51 keystrokes with mental demand
