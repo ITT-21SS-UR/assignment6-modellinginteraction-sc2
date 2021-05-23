@@ -6,8 +6,13 @@ from PyQt5.QtWidgets import QMainWindow
 from calc_model import CalcModel
 from config_parser import ConfigParser
 
+"""
+The model saves and processes relevant data for the calculator.
+"""
 
-# Adjusted code from Sarah's calculator assignment
+
+# Claudia adjusted code from Sarah's calculator assignment
+# Reviewer: Sarah
 class Calculator(QMainWindow):
     def __init__(self, config=None):
         super().__init__()

@@ -10,6 +10,8 @@ If the given config is invalid the system exists and prints out error messages.
 """
 
 
+# Author: Claudia
+# Reviewer: Sarah
 class ConfigKeys(Enum):
     PARTICIPANT_ID = "participant_id"
     TASK = "task"
@@ -19,7 +21,6 @@ class ConfigKeys(Enum):
         return list(map(lambda v: v.value, ConfigKeys))
 
 
-# Author: Claudia
 class ConfigParser:
     @staticmethod
     def __exit_program(message="Please give a valid .json file as argument (-_-)\n"):

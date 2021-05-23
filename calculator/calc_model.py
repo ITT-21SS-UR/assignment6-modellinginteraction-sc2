@@ -8,6 +8,8 @@ from PyQt5.QtCore import pyqtSignal, QObject
 from config_parser import ConfigKeys
 
 
+# Claudia adjusted code from Sarah's calculator assignment
+# Reviewer: Sarah
 class CalcModel(QObject):
     # input source (button, key) for proper logging
     class LoggingEntity(Enum):
