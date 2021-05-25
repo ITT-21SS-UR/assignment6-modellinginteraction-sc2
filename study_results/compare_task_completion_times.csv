@@ -1,0 +1,13 @@
+measurement,task,task_completion_time_in_s
+klm_standard_estimates,A,66.3
+klm_standard_estimates,B,14.28
+klm_standard_estimates,C,19.5
+klm_standard_estimates,D,5.04
+klm_experiment_estimates,A,53.55
+klm_experiment_estimates,B,14.28
+klm_experiment_estimates,C,15.75
+klm_experiment_estimates,D,5.04
+real_task_completion_times_mean,A,33.98
+real_task_completion_times_mean,B,13.33
+real_task_completion_times_mean,C,13.14
+real_task_completion_times_mean,D,9.14
