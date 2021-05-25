@@ -100,6 +100,10 @@ def calc_total_klm_time(data):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        sys.stderr.write("Please give a valid klm txt file as argument (-_-)\n")
+        sys.exit(1)
+
     file_data = read_file(sys.argv[1])
     new_data = delete_comments(file_data)
 
